@@ -10,33 +10,63 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DrawRouteImport } from './routes/draw'
+import { Route as PrizesIndexRouteImport } from './routes/prizes.index'
+import { Route as PrizesRewardIdRouteImport } from './routes/prizes.$rewardId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DrawRoute = DrawRouteImport.update({
+  id: '/draw',
+  path: '/draw',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrizesIndexRoute = PrizesIndexRouteImport.update({
+  id: '/prizes/',
+  path: '/prizes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrizesRewardIdRoute = PrizesRewardIdRouteImport.update({
+  id: '/prizes/$rewardId',
+  path: '/prizes/$rewardId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/draw': typeof DrawRoute
+  '/prizes/$rewardId': typeof PrizesRewardIdRoute
+  '/prizes/': typeof PrizesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/draw': typeof DrawRoute
+  '/prizes/$rewardId': typeof PrizesRewardIdRoute
+  '/prizes': typeof PrizesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/draw': typeof DrawRoute
+  '/prizes/$rewardId': typeof PrizesRewardIdRoute
+  '/prizes/': typeof PrizesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/draw' | '/prizes/$rewardId' | '/prizes/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/draw' | '/prizes/$rewardId' | '/prizes'
+  id: '__root__' | '/' | '/draw' | '/prizes/$rewardId' | '/prizes/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DrawRoute: typeof DrawRoute
+  PrizesRewardIdRoute: typeof PrizesRewardIdRoute
+  PrizesIndexRoute: typeof PrizesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +78,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/draw': {
+      id: '/draw'
+      path: '/draw'
+      fullPath: '/draw'
+      preLoaderRoute: typeof DrawRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prizes/': {
+      id: '/prizes/'
+      path: '/prizes'
+      fullPath: '/prizes/'
+      preLoaderRoute: typeof PrizesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prizes/$rewardId': {
+      id: '/prizes/$rewardId'
+      path: '/prizes/$rewardId'
+      fullPath: '/prizes/$rewardId'
+      preLoaderRoute: typeof PrizesRewardIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DrawRoute: DrawRoute,
+  PrizesRewardIdRoute: PrizesRewardIdRoute,
+  PrizesIndexRoute: PrizesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
