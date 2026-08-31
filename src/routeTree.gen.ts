@@ -11,8 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DrawRouteImport } from './routes/draw'
+import { Route as GiftRouteImport } from './routes/gift'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as WithdrawRouteImport } from './routes/withdraw'
 import { Route as PrizesIndexRouteImport } from './routes/prizes.index'
 import { Route as PrizesRewardIdRouteImport } from './routes/prizes.$rewardId'
+import { Route as ProfileIndexRouteImport } from './routes/profile.index'
+import { Route as ProfileSectionRouteImport } from './routes/profile.$section'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,6 +27,21 @@ const IndexRoute = IndexRouteImport.update({
 const DrawRoute = DrawRouteImport.update({
   id: '/draw',
   path: '/draw',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GiftRoute = GiftRouteImport.update({
+  id: '/gift',
+  path: '/gift',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WithdrawRoute = WithdrawRouteImport.update({
+  id: '/withdraw',
+  path: '/withdraw',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrizesIndexRoute = PrizesIndexRouteImport.update({
@@ -34,39 +54,97 @@ const PrizesRewardIdRoute = PrizesRewardIdRouteImport.update({
   path: '/prizes/$rewardId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfileIndexRoute = ProfileIndexRouteImport.update({
+  id: '/profile/',
+  path: '/profile/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileSectionRoute = ProfileSectionRouteImport.update({
+  id: '/profile/$section',
+  path: '/profile/$section',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/draw': typeof DrawRoute
+  '/gift': typeof GiftRoute
+  '/settings': typeof SettingsRoute
+  '/withdraw': typeof WithdrawRoute
   '/prizes/$rewardId': typeof PrizesRewardIdRoute
+  '/profile/$section': typeof ProfileSectionRoute
   '/prizes/': typeof PrizesIndexRoute
+  '/profile/': typeof ProfileIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/draw': typeof DrawRoute
+  '/gift': typeof GiftRoute
+  '/settings': typeof SettingsRoute
+  '/withdraw': typeof WithdrawRoute
   '/prizes/$rewardId': typeof PrizesRewardIdRoute
+  '/profile/$section': typeof ProfileSectionRoute
   '/prizes': typeof PrizesIndexRoute
+  '/profile': typeof ProfileIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/draw': typeof DrawRoute
+  '/gift': typeof GiftRoute
+  '/settings': typeof SettingsRoute
+  '/withdraw': typeof WithdrawRoute
   '/prizes/$rewardId': typeof PrizesRewardIdRoute
+  '/profile/$section': typeof ProfileSectionRoute
   '/prizes/': typeof PrizesIndexRoute
+  '/profile/': typeof ProfileIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/draw' | '/prizes/$rewardId' | '/prizes/'
+  fullPaths:
+    | '/'
+    | '/draw'
+    | '/gift'
+    | '/settings'
+    | '/withdraw'
+    | '/prizes/$rewardId'
+    | '/profile/$section'
+    | '/prizes/'
+    | '/profile/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/draw' | '/prizes/$rewardId' | '/prizes'
-  id: '__root__' | '/' | '/draw' | '/prizes/$rewardId' | '/prizes/'
+  to:
+    | '/'
+    | '/draw'
+    | '/gift'
+    | '/settings'
+    | '/withdraw'
+    | '/prizes/$rewardId'
+    | '/profile/$section'
+    | '/prizes'
+    | '/profile'
+  id:
+    | '__root__'
+    | '/'
+    | '/draw'
+    | '/gift'
+    | '/settings'
+    | '/withdraw'
+    | '/prizes/$rewardId'
+    | '/profile/$section'
+    | '/prizes/'
+    | '/profile/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DrawRoute: typeof DrawRoute
+  GiftRoute: typeof GiftRoute
+  SettingsRoute: typeof SettingsRoute
+  WithdrawRoute: typeof WithdrawRoute
   PrizesRewardIdRoute: typeof PrizesRewardIdRoute
+  ProfileSectionRoute: typeof ProfileSectionRoute
   PrizesIndexRoute: typeof PrizesIndexRoute
+  ProfileIndexRoute: typeof ProfileIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -85,6 +163,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DrawRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gift': {
+      id: '/gift'
+      path: '/gift'
+      fullPath: '/gift'
+      preLoaderRoute: typeof GiftRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/withdraw': {
+      id: '/withdraw'
+      path: '/withdraw'
+      fullPath: '/withdraw'
+      preLoaderRoute: typeof WithdrawRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/prizes/': {
       id: '/prizes/'
       path: '/prizes'
@@ -99,14 +198,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrizesRewardIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profile/': {
+      id: '/profile/'
+      path: '/profile'
+      fullPath: '/profile/'
+      preLoaderRoute: typeof ProfileIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile/$section': {
+      id: '/profile/$section'
+      path: '/profile/$section'
+      fullPath: '/profile/$section'
+      preLoaderRoute: typeof ProfileSectionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DrawRoute: DrawRoute,
+  GiftRoute: GiftRoute,
+  SettingsRoute: SettingsRoute,
+  WithdrawRoute: WithdrawRoute,
   PrizesRewardIdRoute: PrizesRewardIdRoute,
+  ProfileSectionRoute: ProfileSectionRoute,
   PrizesIndexRoute: PrizesIndexRoute,
+  ProfileIndexRoute: ProfileIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
